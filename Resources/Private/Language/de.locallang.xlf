@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<xliff version="1.0">
+	<file source-language="en" target-language="de" datatype="plaintext" original="messages" date="2016-04-15T13:57:24Z">
+		<header>
+			<generator>LFEditor</generator>
+		</header>
+		<body>
+		<trans-unit id="cache_action.title" approved="yes">
+			<source>Clear Processed Images (webp images too)</source>
+			<target>Lösche verarbeitete Bilder (auch webp-Bilder)</target>
+		</trans-unit>
+		</body>
+	</file>
+</xliff>

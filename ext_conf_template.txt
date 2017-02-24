@@ -1,0 +1,2 @@
+# cat=basic/debug/1000; type=boolean; label=Enable Debugging. The output goes to backend log module when you are logged in
+debug = 0
