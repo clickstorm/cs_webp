@@ -39,6 +39,7 @@ Installation
 - clear the processed images in the install tool
 - reload the backend
 - add the code in the head of your root .htaccess file. This .htaccess Code rewrites the jpg and png images to the webp files if webp is readable in the browser.
+- change the level of quality if needed in the extension configuration in extension manager (default 70)
 
 .. code-block:: php
 

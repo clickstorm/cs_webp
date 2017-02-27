@@ -2,6 +2,7 @@
 namespace Clickstorm\CsWebp\Service;
 
 use TYPO3\CMS\Core\Utility\CommandUtility;
+use TYPO3\CMS\Core\Utility\MathUtility;
 
 class OptimizeImageService {
 
@@ -29,7 +30,8 @@ class OptimizeImageService {
 
 		if ($extension == 'jpg' || $extension == 'jpeg' || $extension == 'png') {
             $webpfile = str_replace("." . $extension, ".webp", $file);
-            $command = sprintf('convert %s -define webp:lossless=true %s', $file, $webpfile);
+            $quality = MathUtility::forceIntegerInRange($this->configuration['quality'],1,100);
+            $command = sprintf('convert %s -quality %s -define webp:lossless=true %s', $file, $quality, $webpfile);
 		}
 
         if (isset($command)) {
