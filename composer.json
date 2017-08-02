@@ -21,7 +21,7 @@
 	"cs_clear_images": "*"
   },
   "require": {
-	"typo3/cms-core": "7.6"
+	"typo3/cms-core": "^8.6"
   },
   "suggest": {
   },
