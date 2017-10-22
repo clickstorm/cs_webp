@@ -3,3 +3,9 @@ quality = 65
 
 # cat=basic/debug/1000; type=boolean; label=Enable Debugging. The output goes to backend log module when you are logged in
 debug = 0
+
+# cat=basic; type=boolean; label=Use cwebp instead of imagemagick
+useCwebp = 0
+
+# cat=basic; type=string; label=path to cwebp Binary
+cwebpPath = cwebp
