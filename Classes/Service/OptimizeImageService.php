@@ -5,6 +5,7 @@ use TYPO3\CMS\Core\Utility\CommandUtility;
 use TYPO3\CMS\Core\Utility\MathUtility;
 
 class OptimizeImageService {
+    public $configuration;
 
     /**
      * Initialize
@@ -32,6 +33,9 @@ class OptimizeImageService {
             $webpfile = str_replace("." . $extension, ".webp", $file);
             $quality = MathUtility::forceIntegerInRange($this->configuration['quality'],1,100);
             $command = sprintf('convert %s -quality %s -define webp:lossless=true %s', $file, $quality, $webpfile);
+            if(isset($this->configuration['useCwebp']) && (bool)$this->configuration['useCwebp'] === true){
+                $command = sprintf('%s -q %s %s -o %s', $this->configuration['cwebpPath'], $quality, $file, $webpfile);
+            }
 		}
 
         if (isset($command)) {
