@@ -3,7 +3,6 @@ namespace Clickstorm\CsWebp\Service;
 
 use TYPO3\CMS\Core\Utility\CommandUtility;
 use TYPO3\CMS\Core\Utility\MathUtility;
-use TYPO3\CMS\Extbase\Utility\DebuggerUtility;
 
 class OptimizeImageService {
     public $configuration;
