@@ -28,7 +28,7 @@ class OptimizeImageService {
 		}
 		$extension = strtolower($extension);
 
-		if (($extension == 'jpg' || $extension == 'jpeg' || $extension == 'png') && strpos($file, 'fileadmin/_processed_') !== false) {
+		if (($extension == 'jpg' || $extension == 'jpeg' || $extension == 'png') && (strpos($file, 'fileadmin/_processed_') !== false || strpos($file, 'typo3temp/_processed_') !== false)) {
             $webpfile = str_replace("." . $extension, ".webp", $file);
             $quality = MathUtility::forceIntegerInRange($this->configuration['quality'],1,100);
             $command = sprintf('convert %s -quality %s -define webp:lossless=true %s', $file, $quality, $webpfile);
