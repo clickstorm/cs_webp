@@ -23,8 +23,6 @@
   "require": {
 	"typo3/cms-core": ">=7.6.0 <9.0.0"
   },
-  "suggest": {
-  },
   "autoload": {
 	"psr-4": {
 	  "Clickstorm\\CsWebp\\": "Classes/"
