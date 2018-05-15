@@ -1,4 +1,5 @@
 <?php
+
 namespace Clickstorm\CsWebp\Hook;
 
 /***************************************************************
@@ -28,51 +29,49 @@ namespace Clickstorm\CsWebp\Hook;
 
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Backend\Utility\BackendUtility;
-use TYPO3\CMS\Core\Imaging\IconFactory;
-use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
 use TYPO3\CMS\Core\Utility\CommandUtility;
+use TYPO3\CMS\Core\Resource\ProcessedFileRepository;
+use TYPO3\CMS\Core\Cache\CacheManager;
 
-class ClearImages implements \TYPO3\CMS\Backend\Toolbar\ClearCacheActionsHookInterface {
+class ClearImages implements \TYPO3\CMS\Backend\Toolbar\ClearCacheActionsHookInterface
+{
     /**
      * Add an entry to the CacheMenuItems array
      *
      * @param array $cacheActions Array of CacheMenuItems
      * @param array $optionValues Array of AccessConfigurations-identifiers (typically  used by userTS with options.clearCache.identifier)
      */
-    public function manipulateCacheActions(&$cacheActions, &$optionValues) {
-        if ($GLOBALS['BE_USER']->getTSConfigVal('options.clearCache.tx_cswebp') == NULL || $GLOBALS['BE_USER']->getTSConfigVal('options.clearCache.tx_cswebp')) {
-            $title = LocalizationUtility::translate('cache_action.title', 'cs_webp');
-
-            $identifier = 'clear_processed_images_icon';
-            $iconRegistry = GeneralUtility::makeInstance(\TYPO3\CMS\Core\Imaging\IconRegistry::class);
-            $iconRegistry->registerIcon($identifier, \TYPO3\CMS\Core\Imaging\IconProvider\BitmapIconProvider::class, ['source' => 'EXT:cs_webp/Resources/Public/Images/clear_cache_icon.png']);
-
-            $iconFactory = GeneralUtility::makeInstance(IconFactory::class);
-            $icon = $iconFactory->getIcon($identifier, \TYPO3\CMS\Core\Imaging\Icon::SIZE_SMALL);
+    public function manipulateCacheActions(&$cacheActions, &$optionValues)
+    {
+        if ($GLOBALS['BE_USER']->getTSConfigVal('options.clearCache.tx_cswebp') === NULL || $GLOBALS['BE_USER']->getTSConfigVal('options.clearCache.tx_cswebp')) {
 
             // Clearing of processed images
-            $cacheActions[] = array(
-                'id'    => 'tx_cswebp',
-                'title' => $title,
-                'href'  => BackendUtility::getModuleUrl('tce_db', [
+            $cacheActions[] = [
+                'id' => 'tx_cswebp',
+                'title' => 'LLL:EXT:cs_webp/Resources/Private/Language/de.locallang.xlf:cache_action.title',
+                'description' => 'LLL:EXT:cs_webp/Resources/Private/Language/de.locallang.xlf:cache_action.description',
+                'href' => BackendUtility::getModuleUrl('tce_db', [
                     'vC' => $GLOBALS['BE_USER']->veriCode(),
                     'cacheCmd' => 'tx_cswebp',
                     'ajaxCall' => 1
                 ]),
-                'icon'  => $icon
-            );
+                'iconIdentifier' => 'ext-cswebp-clear-processed-images'
+            ];
         }
+        $optionValues[] = 'tx_cswebp';
     }
 
     /**
      * This method is called by the CacheMenuItem in the Backend
      * @param \array $_params
      * @param \TYPO3\CMS\Core\DataHandling\DataHandler $dataHandler
+     * @throws \TYPO3\CMS\Core\Cache\Exception\NoSuchCacheGroupException
      */
-    public static function clear($_params, $dataHandler) {
-        if ($_params['cacheCmd'] == 'tx_cswebp') {
-            $repository = GeneralUtility::makeInstance('TYPO3\\CMS\\Core\\Resource\\ProcessedFileRepository');
-            $cacheManager = GeneralUtility::makeInstance('TYPO3\\CMS\\Core\\Cache\\CacheManager');
+    public static function clear($_params, $dataHandler)
+    {
+        if ($_params['cacheCmd'] === 'tx_cswebp') {
+            $repository = GeneralUtility::makeInstance(ProcessedFileRepository::class);
+            $cacheManager = GeneralUtility::makeInstance(CacheManager::class);
 
             // remove all processed files
             $repository->removeAll();

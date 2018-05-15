@@ -13,13 +13,21 @@ $signalSlotDispatcher->connect(
     'processFile'
 );
 
+$iconRegistry = GeneralUtility::makeInstance(\TYPO3\CMS\Core\Imaging\IconRegistry::class);
+$iconRegistry->registerIcon(
+    'ext-cswebp-clear-processed-images',
+    \TYPO3\CMS\Core\Imaging\IconProvider\BitmapIconProvider::class,
+    ['source' => 'EXT:cs_webp/Resources/Public/Images/clear_cache_icon.png']
+);
+
 /*
  * add hooks to clear cache
  */
 // The Backend-MenuItem in ClearCache-Pulldown
+
 $GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['additionalBackendItems']['cacheActions']['tx_cswebp'] =
-    'EXT:cs_webp/Classes/Hook/ClearImages.php:Clickstorm\\CsWebp\\Hook\\ClearImages';
+    Clickstorm\CsWebp\Hook\ClearImages::class;
 
 // The AjaxCall to clear the cache
 $GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['t3lib/class.t3lib_tcemain.php']['clearCachePostProc'][] =
-    'EXT:cs_webp/Classes/Hook/ClearImages.php:Clickstorm\\CsWebp\\Hook\\ClearImages->clear';
+    'Clickstorm\\CsWebp\\Hook\\ClearImages->clear';

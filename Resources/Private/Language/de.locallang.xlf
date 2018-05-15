@@ -7,7 +7,11 @@
 		<body>
 		<trans-unit id="cache_action.title" approved="yes">
 			<source>Clear Processed Images (webp images too)</source>
-			<target>Lösche verarbeitete Bilder (auch webp-Bilder)</target>
+			<target>Lösche verarbeitete Bilder</target>
+		</trans-unit>
+		<trans-unit id="cache_action.description" approved="yes">
+			<source>Clear all processed images (also in WebP format) so they will be regenerated.</source>
+			<target>Lösche alle verarbeiteten Bilder (auch im WebP-Format), so dass diese neu erzeugt werden.</target>
 		</trans-unit>
 		</body>
 	</file>
